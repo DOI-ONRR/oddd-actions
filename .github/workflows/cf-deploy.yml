@@ -1,0 +1,53 @@
+name: Deploy build to cloud.gov via CF CLI
+
+on:
+  workflow_call:
+    inputs:
+      cf-space:
+        required: true
+        type: string
+        default: dev
+      
+      manifest:
+        required: true
+        type: string
+        default: manifest.yml
+
+      build-path:
+        required: true
+        type: string
+        default: ./public
+
+    secrets:
+      CF_USERNAME:
+        required: true
+
+      CF_PASSWORD:
+        required: true
+    
+jobs:
+  deploy:
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ${{ inputs.build-path }}
+
+      - name: Install CF CLI
+        uses: ./.github/actions/cf-install
+
+      - name: Log in to Cloud Foundry
+        shell: bash
+        run: |
+          cf login -u ${{ secrets.CF_USERNAME }} -p ${{ secrets.CF_PASSWORD }} -a api.fr.cloud.gov -o doi-onrr -s ${{ inputs.cf-space }}
+
+      - name: Push to Cloud Foundry
+        shell: bash
+        run: |
+          cf push -f ${{ inputs.manifest }} -p ${{ inputs.build-path }}
