@@ -34,6 +34,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
+          name: ${{ inputs.build-path }}
           path: ${{ inputs.build-path }}
 
       - name: Install CF CLI
