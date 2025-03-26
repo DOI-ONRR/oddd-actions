@@ -37,7 +37,7 @@ jobs:
           path: ${{ inputs.build-path }}
 
       - name: Install CF CLI
-        uses: ./.github/actions/cf-install
+        uses: doi-onrr/oddd-actions/.github/actions/cf-install@v1
 
       - name: Log in to Cloud Foundry
         shell: bash
