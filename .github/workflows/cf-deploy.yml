@@ -4,17 +4,14 @@ on:
   workflow_call:
     inputs:
       cf-space:
-        required: true
         type: string
         default: dev
       
       manifest:
-        required: true
         type: string
         default: manifest.yml
 
       build-path:
-        required: true
         type: string
         default: ./public
 
