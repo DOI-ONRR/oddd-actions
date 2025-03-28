@@ -7,6 +7,22 @@ inputs:
   cf-service-name:
     description: Service name
     required: true
+outputs:
+  host:
+    description: Tunnel host
+    value: ${{ steps.tunnel.outputs.host }}
+  port:
+    description: Tunnel port
+    value: ${{ steps.tunnel.outputs.port }}
+  username:
+    description: Tunnel username
+    value: ${{ steps.tunnel.outputs.username }}
+  password:
+    description: Tunnel password
+    value: ${{ steps.tunnel.outputs.password }}
+  dbname:
+    description: Tunnel database name
+    value: ${{ steps.tunnel.outputs.dbname }}
 runs:
   using: "composite"
   steps:
@@ -16,6 +32,7 @@ runs:
         cf install-plugin -f https://github.com/cloud-gov/cf-service-connect/releases/download/1.1.0/cf-service-connect-linux-amd64
     
     - name: Open the tunnel and capture tunnel info
+      id: tunnel
       shell: bash
       run: |
         # Start the tunnel in the background and write output to a log file

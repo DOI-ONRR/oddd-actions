@@ -65,4 +65,4 @@ jobs:
       - name: Check connection variables
         shell: bash
         run: |
-          echo ${{ steps.db-tunnel.outputs.host }}
+          echo "The 'host' output from db-tunnel is: ${{ steps.db-tunnel.outputs.host }}"
