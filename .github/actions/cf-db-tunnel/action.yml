@@ -1,5 +1,12 @@
 name: Tunnel to database via CF
 description: Open a database tunnel via Cloud Foundry CLI
+inputs:
+  cf-app-name:
+    description: Application name
+    required: true
+  cf-service-name:
+    description: Service name
+    required: true
 runs:
   using: "composite"
   steps:

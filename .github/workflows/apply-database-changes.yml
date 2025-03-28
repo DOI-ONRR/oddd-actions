@@ -50,9 +50,10 @@ jobs:
       - name: Log in to Cloud Foundry
         uses: doi-onrr/oddd-actions/.github/actions/cf-login@v1
         with: 
-          cf-username: ${{ secrets.CF_USERNAME }}
-          cf-password: ${{ secrets.CF_PASSWORD }}
           cf-space: ${{ inputs.cf-space }}
+        env:
+          CF_USERNAME: ${{ secrets.CF_USERNAME }}
+          CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
 
       - name: Tunnel to database
         id: db-tunnel
