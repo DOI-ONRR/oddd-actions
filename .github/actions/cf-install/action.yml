@@ -5,9 +5,10 @@ runs:
   steps:
     - name: Download and install cf CLI
       shell: bash
+      env:
+        CF_CLI_VERSION: 8.19.0
       run: |
-        wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add -
-        echo "deb https://packages.cloudfoundry.org/debian stable main" | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list
-        sudo apt-get update
-        sudo apt-get install cf8-cli
+        curl -fsSL "https://github.com/cloudfoundry/cli/releases/download/v${CF_CLI_VERSION}/cf8-cli_${CF_CLI_VERSION}_linux_x86-64.tgz" \
+          | sudo tar -xz -C /usr/local/bin cf8
+        sudo ln -sf /usr/local/bin/cf8 /usr/local/bin/cf
         cf --version
